@@ -83,7 +83,7 @@ def my_time_stamp(t=-1, time_only=False, adjust = 7):
 
 def execute(code, log_file=-1, verbose=True, result=False):
   import subprocess
-  if log_file == -1: log_file = f"/tmp/logs/{my_time_stamp().split(' - ')[1]}-{code.split(' ')[0]}-.txt"
+  if log_file == -1: log_file = f"/tmp/logs/{my_time_stamp().split(' - ')[1]}-{code.split(' ')[0]}.txt"
   with open(log_file, "w+") as file:
     subprocess.call(code, shell=True, stdout=file)
   with open(log_file, "r") as file:
