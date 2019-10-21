@@ -68,8 +68,8 @@ def print_all():
 print_all()
 """
 
-create_script('auth' , 'ngrok authtoken 1SNomSh04Xr4dDCzLinGGnUZ39A_3rKGLsQZG9qMkVzPz1Zv4')
-create_script('tunnel' , 'ngrok authtoken 1S1bYIU5EsnjbF6yMmFUscJwGjj_5q3K8zNcMHSXXxHY3gB8B && ngrok tcp 22 &')
+create_script('auth' , 'ngrok authtoken 12345')
+create_script('tunnel' , 'ngrok authtoken 12345 && ngrok tcp 22 &')
 create_script('files', 'ngrok http -subdomain=sotola file:///')
 create_script('mybokeh', 'ngrok http -subdomain=sotobokeh 5100')
 create_command('allngrok', code_all)
