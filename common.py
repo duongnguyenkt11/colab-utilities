@@ -1,7 +1,11 @@
-def tik():
+def tik(verbose=True):
     import time
     global _time
     _time = time. time()
+    CEND = '\33[0m'; CVIOLET = '\33[35m'
+    if verbose:
+        print(f"Started timing: {CVIOLET}{time_format(time_only=True)}{CEND} seconds. ")
+
 
 def tok():
     import time
