@@ -167,10 +167,9 @@ def start_colab_session(password, freetoken, token):
   print("*** Checking for ssh daemon (sshd: /usr/sbin/sshd -D) ***")
   time.sleep(1)
   execute("""ps -aux | grep [s]sh""")
-  execute('allngrok')
-
   print("*** checking pycharm_helper, there should be pycharm_test.py ***")
   execute("ls /root/.pycharm_helpers/pycharm/pycharm_commands")
+  execute('allngrok')
   tok()
 
 
