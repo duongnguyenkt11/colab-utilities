@@ -59,7 +59,7 @@ def print_all():
             url = tunnel['public_url']
             if url.count('https') <= 0 :
                 local = tunnel['config']['addr'].replace('http://', '').replace('file://', '')
-                print(f"{url:<30} =>   {local:<20} {port}")
+                print(f"{url:<40} =>   {local:<20} {port}")
         return True
 
     i = 4040
