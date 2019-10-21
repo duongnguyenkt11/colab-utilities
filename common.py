@@ -4,7 +4,7 @@ def tik(verbose=True):
     _time = time. time()
     CEND = '\33[0m'; CVIOLET = '\33[35m'
     if verbose:
-        print(f"Started timing: {CVIOLET}{time_format(time_only=True)}{CEND} seconds. ")
+        print(f"Started timing: {CVIOLET}{time_format(time_only=True)}{CEND}.")
 
 
 def tok():
