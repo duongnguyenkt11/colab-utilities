@@ -92,5 +92,87 @@ def execute(code, log_file=-1, verbose=True, result=False):
   if verbose: print(res)
   if result: return res
   else: return
+    
+#-----------------------------------------------------------------------------------------------------------
 
+def start_colab_session(password, freetoken, token):
+  import sys , time, os
+  execute("mkdir /tmp/logs", "init.txt")
+  print("*** Download ngrok ***")
+  get_ipython().system_raw("tar -xvf /content/colab-utilities/pycharm_helper.tar.gz && mv .pycharm_helpers /root/")
+
+  def make_yml_file(user='', authtoken=''):
+    print("*** Preparing ngrok.yml file with ports for web-app fowarding ***")
+    st = f"""
+    authtoken: {authtoken} 
+    tunnels:
+      bokeh-app:
+        addr: 5100
+        proto: http
+        subdomain: {user}-tpu-bokeh
+      flask-app:
+        addr: 5000
+        proto: http
+        subdomain: {user}-tpu-flask
+      files-app:
+        addr: file:///
+        proto: http
+        subdomain: {user}-tpu-files
+      tensor-board:
+        addr: 6006
+        proto: http
+        subdomain: {user}-tpu-tf
+    """
+    if user == 'dummy': st = f"""authtoken: {authtoken}"""
+    with open('/root/.ngrok2/ngrok.yml', 'w') as file:
+      file.write(st)
+    time.sleep(0.2)
+  # /make_yml_file()
+
+  #app0
+  execute("""wget -q -c -nc https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip""")
+  execute("""unzip -qq -n ngrok-stable-linux-amd64.zip""")
+  print("*** Listing current dir, which should contain ngrok ***")
+  execute("ls")
+  execute("""cp ./ngrok /usr/bin/""")
+
+  execute("ngrok authtoken dummytoken") # create /root/.ngrok2/ folder
+  make_yml_file(user='dummy', authtoken=freetoken) # tanky
+  get_ipython().system_raw('ngrok tcp 22 &')
+  make_yml_file(user='sotola', authtoken=token) 
+
+
+  execute("cat /root/.ngrok2/ngrok.yml | grep authtoken")
+
+  # Setup sshd
+  print("*** Install ssh (using apt-get) ***")
+  execute("""apt-get install -qq -o=Dpkg::Use-Pty=0 openssh-server pwgen > /dev/null""")
+  #execute("""apt-get install -qq -o=Dpkg::Use-Pty=0 openssh-server pwgen""")
+  time.sleep(3); print("*** Set root password ***")
+
+  # Set root password 1
+  execute("""mkdir /var/run/sshd""")
+  execute(f"""echo root:{password} | chpasswd""")
+
+  execute("""echo "PermitRootLogin yes" >> /etc/ssh/sshd_config """)
+  execute("""echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config""")
+  execute("""echo "LD_LIBRARY_PATH=/usr/lib64-nvidia" >> /root/.bashrc""")
+  execute("""echo "export LD_LIBRARY_PATH" >> /root/.bashrc""")
+  # Run sshd
+  print("*** Starting ssh service ***")
+  get_ipython().system_raw('/usr/sbin/sshd -D &')
+  # Run sshd
+  print("*** Starting ssh service ***")
+  get_ipython().system_raw('/usr/sbin/sshd -D &')
+  print("*** Checking for ssh daemon (sshd: /usr/sbin/sshd -D) ***")
+  time.sleep(1)
+  execute("""ps -aux | grep [s]sh""")
+  execute('allngrok')
+
+  print("*** checking pycharm_helper, there should be pycharm_test.py ***")
+  execute("ls /root/.pycharm_helpers/pycharm/pycharm_commands")
+  tok()
+
+
+#-----------------------------------------------------------------------------------------------------------
 tik()
