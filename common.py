@@ -74,4 +74,22 @@ create_script('files', 'ngrok http -subdomain=sotola file:///')
 create_script('mybokeh', 'ngrok http -subdomain=sotobokeh 5100')
 create_command('allngrok', code_all)
 
+def my_time_stamp(t=-1, time_only=False, adjust = 7):
+    import time
+    if t == -1: t = time.time()
+    st = time.strftime('%Y_%m_%d - %I_%M_%S %p',time.localtime(t + 3600* adjust))
+    if time_only: st = st[-11:-3]
+    return st
+
+def execute(code, log_file=-1, verbose=True, result=False):
+  if log_file == -1: log_file = f"/tmp/logs/{my_time_stamp().split(' - ')[1]}-{code.split(' ')[0]}-.txt"
+  with open(log_file, "w+") as file:
+    subprocess.call(code, shell=True, stdout=file)
+  with open(log_file, "r") as file:
+    res = file.read()
+    if len(res) == 0: res = f"*** {code}: No output ***"
+  if verbose: print(res)
+  if result: return res
+  else: return
+
 tik()
