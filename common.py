@@ -91,6 +91,7 @@ def execute(code, log_file=-1, verbose=True, result=False):
   with open(log_file, "r") as file:
     res = file.read()
     if len(res) == 0: res = f"*** {code}: No output ***"
+  log(code)
   if verbose: print(res)
   if result: return res
   else: return
