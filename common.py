@@ -119,9 +119,11 @@ def view_log():
 #-----------------------------------------------------------------------------------------------------------
 def start_colab_session(password, freetoken, token):
   import sys , time, os
+
+  log('***Starting colab session***')
   execute("mkdir /tmp/logs", "init0.txt")
   execute(f"mkdir {LOG_DIR}", "init1.txt")
-  log('***Starting colab session***')
+  
   print("*** Download ngrok ***")
   get_ipython().system_raw("tar -xvf /content/colab-utilities/pycharm_helper.tar.gz && mv .pycharm_helpers /root/")
 
