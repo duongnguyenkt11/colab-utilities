@@ -98,7 +98,8 @@ def execute(code, log_file=-1, verbose=True, result=False):
 def start_colab_session(password, freetoken, token):
   import sys , time, os
   execute("mkdir /tmp/logs", "init0.txt")
-  execute("mkdir /content/tf_logs", "init1.txt")
+  LOG_DIR = '/content/tf_logs'
+  execute(f"mkdir {LOG_DIR}", "init1.txt")
   print("*** Download ngrok ***")
   get_ipython().system_raw("tar -xvf /content/colab-utilities/pycharm_helper.tar.gz && mv .pycharm_helpers /root/")
 
