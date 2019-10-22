@@ -100,6 +100,11 @@ def execute(code, log_file=-1, verbose=True, result=False):
 def start_tensorboard():
  get_ipython().system_raw(f'tensorboard --logdir {LOG_DIR}  --host 0.0.0.0 --port 6006 &')
 
+def tensorboard_file_writer():
+    logdir = os.path.join(LOG_DIR, my_time_stamp())
+    file_writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
+    return file_writer
+
 def start_colab_session(password, freetoken, token):
   import sys , time, os
   execute("mkdir /tmp/logs", "init0.txt")
