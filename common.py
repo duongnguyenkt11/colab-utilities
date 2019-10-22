@@ -172,6 +172,29 @@ def start_colab_session(password, freetoken, token):
   execute('allngrok')
   tok()
 
+#-----------------------------------------------------------------------------------------------------------
+
+__tpu_strategy = 0.1111
+def get_TPU_strategy():
+    import numpy as np, tensorflow as tf, os, sys
+    global __tpu_strategy
+    if __tpu_strategy == 0.1111:
+        resolver = tf.contrib.cluster_resolver.TPUClusterResolver(get_TPU_address())
+        tf.contrib.distribute.initialize_tpu_system(resolver)
+        __tpu_strategy = tf.contrib.distribute.TPUStrategy(resolver)
+    return __tpu_strategy
+
+def get_TPU_address():
+    import distutils
+    import numpy as np, tensorflow as tf, os, sys
+    if distutils.version.LooseVersion(tf.__version__) < '1.14':
+        raise Exception(
+            'This notebook is compatible with TensorFlow 1.14 or higher, for TensorFlow 1.13 or lower please use the previous version at https://github.com/tensorflow/tpu/blob/r1.13/tools/colab/shakespeare_with_tpu_and_keras.ipynb')
+
+    # This address identifies the TPU we'll use when configuring TensorFlow.
+    TPU_WORKER = 'grpc://' + os.environ['COLAB_TPU_ADDR']
+    return TPU_WORKER
+
 
 #-----------------------------------------------------------------------------------------------------------
 tik()
