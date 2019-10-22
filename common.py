@@ -123,7 +123,7 @@ def start_colab_session(password, freetoken, token):
   log('***Starting colab session***')
   execute("mkdir /tmp/logs", "init0.txt")
   execute(f"mkdir {LOG_DIR}", "init1.txt")
-  
+  execute("cp /content/colab-utilities/common.py /tmp/tmp_common.py")
   print("*** Download ngrok ***")
   get_ipython().system_raw("tar -xvf /content/colab-utilities/pycharm_helper.tar.gz && mv .pycharm_helpers /root/")
 
