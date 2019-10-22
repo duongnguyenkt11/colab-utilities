@@ -105,6 +105,17 @@ def tensorboard_file_writer():
     file_writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
     return file_writer
 
+LOG_FILE = '/tmp/server.log'
+
+def log(text):
+  with open(LOG_FILE, 'a') as file:
+    file.write(f'{my_time_stamp()} : {text}\n')
+
+def view_log():
+  with open(LOG_FILE, 'r') as file:
+    print(file.read())
+    
+#-----------------------------------------------------------------------------------------------------------
 def start_colab_session(password, freetoken, token):
   import sys , time, os
   execute("mkdir /tmp/logs", "init0.txt")
