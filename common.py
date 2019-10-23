@@ -162,7 +162,7 @@ def make_yml_file(user='', authtoken=''):
     time.sleep(0.2)
   # /make_yml_file()
 
-def start_colab_session(password, freetoken, token):
+def start_colab_session(uname, password, freetoken, token):
   import sys , time, os
 
   log('***Starting colab session***')
@@ -185,7 +185,7 @@ def start_colab_session(password, freetoken, token):
   from time import sleep; sleep(0.5)  
   get_ipython().system_raw('ngrok tcp 22 &')
   from time import sleep; sleep(0.5)
-  make_yml_file(user='sotola', authtoken=token) 
+  make_yml_file(user=uname, authtoken=token) 
   execute("cat /root/.ngrok2/ngrok.yml | grep authtoken")
 
   # Setup sshd
