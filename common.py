@@ -117,6 +117,22 @@ def view_log():
     print(file.read())
     
 #-----------------------------------------------------------------------------------------------------------
+
+FP_ENVIRON = '/tmp/environ.pickle'
+
+def pickle_environ():
+    import os, pickle
+    environ = os.environ
+    dic = {key: environ[key] for key in os.environ.keys()}
+    with open(FP_ENVIRON, 'wb') as file: pickle.dump(dic, file)
+
+
+def load_environ():
+    import os, pickle
+    with open(FP_ENVIRON, 'rb') as file:
+        os.environ = pickle.load(file)
+    
+#-----------------------------------------------------------------------------------------------------------
 def start_colab_session(password, freetoken, token):
   import sys , time, os
 
@@ -191,7 +207,8 @@ def start_colab_session(password, freetoken, token):
   print("*** Starting ssh service ***")
   get_ipython().system_raw('/usr/sbin/sshd -D &')
   print("*** Checking for ssh daemon (sshd: /usr/sbin/sshd -D) ***")
-  time.sleep(1)
+  pickle_environ()
+  time.sleep(0.5)
   execute("""ps -aux | grep [s]sh""")
   print("*** checking pycharm_helper, there should be pycharm_test.py ***")
   execute("ls /root/.pycharm_helpers/pycharm/pycharm_commands")
