@@ -133,17 +133,8 @@ def load_environ():
         os.environ = pickle.load(file)
     
 #-----------------------------------------------------------------------------------------------------------
-def start_colab_session(password, freetoken, token):
-  import sys , time, os
 
-  log('***Starting colab session***')
-  execute("mkdir /tmp/logs", "init0.txt")
-  execute(f"mkdir {LOG_DIR}", "init1.txt")
-  execute("cp /content/colab-utilities/common.py /tmp/tmp_common.py")
-  print("*** Download ngrok ***")
-  get_ipython().system_raw("tar -xvf /content/colab-utilities/pycharm_helper.tar.gz && mv .pycharm_helpers /root/")
-
-  def make_yml_file(user='', authtoken=''):
+def make_yml_file(user='', authtoken=''):
     print("*** Preparing ngrok.yml file with ports for web-app fowarding ***")
     st = f"""
     authtoken: {authtoken} 
@@ -171,17 +162,29 @@ def start_colab_session(password, freetoken, token):
     time.sleep(0.2)
   # /make_yml_file()
 
-  #app0
+def start_colab_session(password, freetoken, token):
+  import sys , time, os
+
+  log('***Starting colab session***')
+  execute("mkdir /tmp/logs", "init0.txt")
+  execute(f"mkdir {LOG_DIR}", "init1.txt")
+  execute("cp /content/colab-utilities/common.py /tmp/tmp_common.py")
+  print("*** Download ngrok ***")
+  get_ipython().system_raw("tar -xvf /content/colab-utilities/pycharm_helper.tar.gz && mv .pycharm_helpers /root/")
+
+  #app0 Downloading and installing ngrok
   execute("""wget -q -c -nc https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip""")
   execute("""unzip -qq -n ngrok-stable-linux-amd64.zip""")
   print("*** Listing current dir, which should contain ngrok ***")
   execute("ls")
   execute("""cp ./ngrok /usr/bin/""")
 
+  # setting up ngrok yml file & start tunnelling
   execute("ngrok authtoken dummytoken") # create /root/.ngrok2/ folder
   make_yml_file(user='dummy', authtoken=freetoken)
+  from time import sleep; sleep(0.5)  
   get_ipython().system_raw('ngrok tcp 22 &')
-  from time import sleep; sleep(1)
+  from time import sleep; sleep(0.5)
   make_yml_file(user='sotola', authtoken=token) 
   execute("cat /root/.ngrok2/ngrok.yml | grep authtoken")
 
@@ -189,26 +192,23 @@ def start_colab_session(password, freetoken, token):
   print("*** Install ssh (using apt-get) ***")
   execute("""apt-get install -qq -o=Dpkg::Use-Pty=0 openssh-server pwgen > /dev/null""")
   #execute("""apt-get install -qq -o=Dpkg::Use-Pty=0 openssh-server pwgen""")
-  time.sleep(3); print("*** Set root password ***")
+  time.sleep(2); print("*** Set root password ***")
 
   # Set root password 1
   execute("""mkdir /var/run/sshd""")
   execute(f"""echo root:{password} | chpasswd""")
-
   execute("""echo "PermitRootLogin yes" >> /etc/ssh/sshd_config """)
   execute("""echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config""")
   execute("""echo "LD_LIBRARY_PATH=/usr/lib64-nvidia" >> /root/.bashrc""")
   execute("""echo "export LD_LIBRARY_PATH" >> /root/.bashrc""")
+  
   # Run sshd
   print("*** Starting ssh service ***")
   get_ipython().system_raw('/usr/sbin/sshd -D &')
-  # Run sshd
-  print("*** Starting ssh service ***")
-  get_ipython().system_raw('/usr/sbin/sshd -D &')
-  print("*** Checking for ssh daemon (sshd: /usr/sbin/sshd -D) ***")
+
+  # pickle os.enrivon for TPU address
   pickle_environ()
-  time.sleep(0.5)
-  execute("""ps -aux | grep [s]sh""")
+  
   print("*** checking pycharm_helper, there should be pycharm_test.py ***")
   execute("ls /root/.pycharm_helpers/pycharm/pycharm_commands")
   execute('allngrok')
