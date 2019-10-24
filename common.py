@@ -163,7 +163,7 @@ def make_yml_file(user='', authtoken=''):
   # /make_yml_file()
 
 
-def ngrok_connect(freetoken, token='', delay=2): 
+def ngrok_connect(freetoken, token='', uname='noname', delay=2): 
   make_yml_file(user='dummy', authtoken=freetoken)
   from time import sleep; sleep(delay)  
   get_ipython().system_raw('ngrok tcp 22 &')
@@ -191,7 +191,7 @@ def start_colab_session(uname, password, freetoken, token):
 
   # setting up ngrok yml file & start tunnelling
   execute("ngrok authtoken dummytoken") # create /root/.ngrok2/ folder
-  ngrok_connect(freetoken=freetoken, token=token, delay=2)
+  ngrok_connect(freetoken=freetoken, token=token, uname=uname, delay=2)
   execute("cat /root/.ngrok2/ngrok.yml | grep authtoken")
 
   # Setup sshd
