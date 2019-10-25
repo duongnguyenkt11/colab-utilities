@@ -180,7 +180,7 @@ def start_colab_session(uname, password, freetoken, token):
   execute(f"mkdir {LOG_DIR}", "init1.txt")
   execute("cp /content/colab-utilities/common.py /tmp/tmp_common.py")
   print("*** Download ngrok ***")
-  # get_ipython().system_raw("tar -xvf /content/colab-utilities/pycharm_helper.tar.gz && mv .pycharm_helpers /root/")
+  get_ipython().system_raw("unzip /content/colab-utilities/pycharm_helpers.zip && mv .pycharm_helpers /root/")
 
   #app0 Downloading and installing ngrok
   execute("""wget -q -c -nc https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip""")
