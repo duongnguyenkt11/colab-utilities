@@ -243,6 +243,8 @@ def get_TPU_address():
     TPU_WORKER = 'grpc://' + os.environ['COLAB_TPU_ADDR']
     return TPU_WORKER
 
+def ps_kernel():
+    return execute("ps -aux | grep '[\-m] ipy'", verbose=False, result=True)
 
 #-----------------------------------------------------------------------------------------------------------
 tik()
