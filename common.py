@@ -166,7 +166,7 @@ def make_yml_file(user='', authtoken=''):
 def ngrok_connect(freetoken, token='', uname='noname', delay=2): 
   make_yml_file(user='dummy', authtoken=freetoken)
   from time import sleep; sleep(delay)  
-  !screen -d -m ngrok tcp 22
+  get_ipython().system_raw("screen -d -m ngrok tcp 22")
   if len(token) > 0:
     sleep(0.5)
     make_yml_file(user=uname, authtoken=token)    
