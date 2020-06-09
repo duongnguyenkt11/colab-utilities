@@ -1,0 +1,54 @@
+name: db
+channels:
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=main
+  - ca-certificates=2020.1.1=0
+  - certifi=2020.4.5.1=py36_0
+  - libedit=3.1.20181209=hc058e9b_0
+  - libffi=3.2.1=hd88cf55_4
+  - libgcc-ng=9.1.0=hdf63c60_0
+  - libstdcxx-ng=9.1.0=hdf63c60_0
+  - ncurses=6.2=he6710b0_1
+  - openssl=1.1.1g=h7b6447c_0
+  - pip=20.0.2=py36_3
+  - python=3.6.9=h265db76_0
+  - readline=7.0=h7b6447c_5
+  - setuptools=47.1.1=py36_0
+  - sqlite=3.31.1=h62c20be_1
+  - tk=8.6.8=hbc83047_0
+  - wheel=0.34.2=py36_0
+  - xz=5.2.5=h7b6447c_0
+  - zlib=1.2.11=h7b6447c_3
+  - pip:
+    - absl-py==0.9.0
+    - astor==0.8.1
+    - gast==0.3.3
+    - google-pasta==0.2.0
+    - grpcio==1.29.0
+    - h5py==2.10.0
+    - importlib-metadata==1.6.1
+    - keras==2.2.5
+    - keras-applications==1.0.8
+    - keras-preprocessing==1.1.2
+    - keras-resnet==0.2.0
+    - markdown==3.2.2
+    - numpy==1.18.5
+    - opencv-contrib-python==3.4.2.17
+    - opencv-python==3.4.2.17
+    - pillow==6.2.0
+    - protobuf==3.12.2
+    - pyclipper==1.1.0.post3
+    - pyyaml==5.3.1
+    - scipy==1.4.1
+    - shapely==1.7.0
+    - six==1.15.0
+    - tensorboard==1.14.0
+    - tensorflow-estimator==1.14.0
+    - tensorflow-gpu==1.14.0
+    - termcolor==1.1.0
+    - werkzeug==1.0.1
+    - wrapt==1.12.1
+    - zipp==3.1.0
+prefix: /root/anaconda3/envs/db
+
