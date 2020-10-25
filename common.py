@@ -1,5 +1,5 @@
 LOG_DIR = '/content/tf_logs'
-
+#
 def tik(verbose=True):
     import time
     global _time
